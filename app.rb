@@ -9,5 +9,5 @@ class App < Sinatra::Base
     translator = PigLatinizer.new
     translator.to_pig_latin(params[:user_phrase])
   end
-  
+
 end
