@@ -1,2 +1,2 @@
-<% pig_latin = PigLatinizer.new(@pig_latin) %>
-<h2><%="#{pig_latin}%></h2>
+<% pig_latin = PigLatinizer.new %>
+<h2><%= pig_latin.piglatinize(@pig_latin) %></h2>
