@@ -1,21 +1,38 @@
 class PigLatinizer
+  attr_reader :user_text
 
-  def piglatinize(phrase)
-    words = phrase.split(" ")
-    piglatin_words = []
-    words.each{|word| piglatin_words << piglatinize_word(word)}
-    piglatin_words.join(" ")
-  end
+  def piglatinize(user_text)
+    word_list = user_text.strip.split(" ")
 
-  def piglatinize(word)
-    parts_of_word = word.split(/([^aeiouAEIOU]*)([aeiouAEIOU]*)(.*)/)
-    # binding.pry
-    start = parts_of_word[1] # consonant cluster
-    rest = parts_of_word[2] + (parts_of_word[3] || "")
-    if start.length>0
-      "#{rest}#{start}ay"
+    if word_list.length == 1
+      piglatnize_word(word_list[0])
     else
-      "#{rest}way"
+      piglatinized_list = []
+
+      word_list.each do |word|
+        piglatinized_list << piglatnize_word(word)
+      end
+
+      piglatinized_list.join(" ")
     end
   end
-end
+
+  def piglatnize_word(word)
+    alphabet = ('a'..'z').to_a
+    vowels = %w[a e i o u]
+    consonants = alphabet - vowels
+
+    if vowels.include?(word[0].downcase)
+      word + 'way'
+    elsif consonants.include?(word[0].downcase) && consonants.include?(word[1].downcase) && consonants.include?(word[2].downcase)
+    word[3..-1] + word[0..2] + 'ay'
+    elsif consonants.include?(word[0].downcase) && consonants.include?(word[1].downcase)
+      word[2..-1] + word[0..1] + 'ay'
+    elsif consonants.include?(word[0].downcase)
+      word[1..-1] + word[0] + 'ay'
+    else
+      word
+    end
+
+  end
+end 
