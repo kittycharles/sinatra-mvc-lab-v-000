@@ -1,7 +1,7 @@
 class PigLatinizer
 
-  def piglatinize (text)
-    words = text.split(" ")
+  def piglatinize(phrase)
+    words = phrase.split(" ")
     piglatin_words = []
     words.each{|word| piglatin_words << piglatinize_word(word)}
     piglatin_words.join(" ")
