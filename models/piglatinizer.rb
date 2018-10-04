@@ -7,27 +7,15 @@ class PigLatinizer
     piglatin_words.join(" ")
   end
 
-  def piglatinize_word(word)
-    letters = word.split('')
-    piglatin_word = word
-    if vowel?(letters.first)
-      piglatin_word << "way"
+  def piglatinize(word)
+    parts_of_word = word.split(/([^aeiouAEIOU]*)([aeiouAEIOU]*)(.*)/)
+    # binding.pry
+    start = parts_of_word[1] # consonant cluster
+    rest = parts_of_word[2] + (parts_of_word[3] || "")
+    if start.length>0
+      "#{rest}#{start}ay"
     else
-      consonants = letters[0]
-      letters.delete_at(0)
-      until vowel?(letters[0])
-        consonants << letters[0]
-        letters.delete_at(0)
-      end
-      piglatin_word = letters.join
-      piglatin_word << consonants
-      piglatin_word << "ay"
+      "#{rest}way"
     end
-    piglatin_word
   end
-
-  def vowel?(letter)
-    letter.downcase == "a" || letter.downcase == "e" || letter.downcase == "i" || letter.downcase == "o" || letter.downcase == "u"
-  end
-
 end
